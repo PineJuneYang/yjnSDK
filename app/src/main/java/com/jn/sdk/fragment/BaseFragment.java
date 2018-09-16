@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jn.sdk.function.FunctionsManager;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -17,6 +19,13 @@ import butterknife.Unbinder;
  */
 
 public abstract class BaseFragment extends Fragment {
+
+
+    public FunctionsManager functionsManager;
+
+    public void setFunctionsManager(FunctionsManager functionsManager) {
+        this.functionsManager = functionsManager;
+    }
 
     private Unbinder unbinder;
 

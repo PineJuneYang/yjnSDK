@@ -21,6 +21,13 @@ import butterknife.Unbinder;
  */
 
 public class HomeFragment extends BaseFragment {
+
+
+    //定义接口
+    public static final String INTERFACE_WITHPARAMONLY = HomeFragment.class.getName()+"WPO";
+
+
+
     @BindView(R.id.new_message)
     View newMessage;
     @BindView(R.id.search)
