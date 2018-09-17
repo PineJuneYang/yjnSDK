@@ -13,7 +13,7 @@ import java.util.Map;
 public class FunctionsManager  {
 
 
-    private FunctionsManager instance=null;
+    private static FunctionsManager instance=null;
 
     public FunctionsManager(){
         mFunctionNoParaNoResul = new HashMap<>();
@@ -23,7 +23,7 @@ public class FunctionsManager  {
 
     }
 
-    public FunctionsManager getInstance(){
+    public static FunctionsManager getInstance(){
 
         synchronized (FunctionsManager.class){
             if (instance==null){
@@ -51,14 +51,14 @@ public class FunctionsManager  {
     }
 
 
-    public void invokeFuntionWithParamOnly (String funcitonName){
+    public void invokeFuntionWithParamOnly (String funcitonName,String param){
         if (TextUtils.isEmpty(funcitonName)) {
             return;
         }
         if (mFunctionWithParamOnly!=null){
             FunctionWithParamOnly functionWithParamOnly = mFunctionWithParamOnly.get(funcitonName);
             if (functionWithParamOnly!=null){
-                functionWithParamOnly.function();
+                functionWithParamOnly.function(param);
             }else {
                 try {
                     throw new FunctionException("has no this function:"+funcitonName);

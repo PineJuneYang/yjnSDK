@@ -1,5 +1,6 @@
 package com.jn.sdk.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jn.sdk.MainActivity;
 import com.jn.sdk.function.FunctionsManager;
 
 import butterknife.ButterKnife;
@@ -38,6 +40,14 @@ public abstract class BaseFragment extends Fragment {
      * 界面初始化
      */
     protected abstract void initView();
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        MainActivity mainActivity  = (MainActivity) context;
+        mainActivity.setFunctionForFragment(getTag());
+    }
 
     @Nullable
     @Override
@@ -71,5 +81,10 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+
+
     }
+
+
+
 }

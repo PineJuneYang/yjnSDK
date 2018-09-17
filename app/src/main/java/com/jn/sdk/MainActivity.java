@@ -1,5 +1,7 @@
 package com.jn.sdk;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
@@ -9,13 +11,17 @@ import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 
 import com.jn.sdk.R;
 import com.jn.sdk.activity.BaseActivity;
+import com.jn.sdk.fragment.BaseFragment;
 import com.jn.sdk.fragment.HomeFragment;
 import com.jn.sdk.fragment.MineFragment;
 import com.jn.sdk.fragment.RouteFragment;
+import com.jn.sdk.function.FunctionWithParamOnly;
+import com.jn.sdk.function.FunctionsManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -219,7 +225,7 @@ public class MainActivity extends BaseActivity {
         setTitle("首页");
         if (homeFragment == null) {
             homeFragment = new HomeFragment();
-            transaction.add(R.id.fl_content, homeFragment);
+            transaction.add(R.id.fl_content, homeFragment,HomeFragment.class.getName());
         } else {
             transaction.show(homeFragment);
         }
@@ -232,7 +238,7 @@ public class MainActivity extends BaseActivity {
         setTitle("路线");
         if (routeFragment == null) {
             routeFragment = new RouteFragment();
-            transaction.add(R.id.fl_content, routeFragment);
+            transaction.add(R.id.fl_content, routeFragment,RouteFragment.class.getName());
         } else {
             transaction.show(routeFragment);
         }
@@ -246,10 +252,34 @@ public class MainActivity extends BaseActivity {
         setTitle("我的");
         if (mineFragment == null) {
             mineFragment = new MineFragment();
-            transaction.add(R.id.fl_content, mineFragment);
+            transaction.add(R.id.fl_content, mineFragment,MineFragment.class.getName());
         } else {
             transaction.show(mineFragment);
         }
     }
+
+
+
+    //Activity 实现接口
+    public void setFunctionForFragment(String fragmentTag){
+
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+
+        BaseFragment fragment = (BaseFragment) fm.findFragmentByTag(fragmentTag);
+        FunctionsManager instance = FunctionsManager.getInstance();
+        fragment.setFunctionsManager(instance.addFunctionWithParamOnly(new FunctionWithParamOnly<Object>(HomeFragment.INTERFACE_WITHPARAMONLY) {
+
+            @Override
+            public void function(Object... objects) {
+                String object = (String) objects[0];
+                Toast.makeText(context,object,Toast.LENGTH_SHORT).show();
+
+            }
+        }));
+
+
+
+    }
+
 
 }
